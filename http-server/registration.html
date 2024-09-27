@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <style>
+    .popup {
+    display: none;
+    /* color: red; */
+    font-size: 12px;
+    margin-left: 10px;
+  }
+.input-container {
+    margin-bottom: 10px;
+  }
+
+th, td {
+      padding-top: 5px;
+      padding-left: 10px;
+      padding-right: 20px;
+  }
+
+.formclass{
+  /* margin-left: 40%; */
+  /* align-items: center; */
+  justify-content: center;
+}
+
+#myForm{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 29px;
+  background-color: rgb(188, 215, 232);
+  padding-top: 10px;
+  margin-left: 30%;
+  margin-right: 30%;
+  border-radius: 7px;
+  /* margin-right: 40%; */
+  text-align: center;
+}
+
+.inputF{
+  margin: 10px;
+  height: 10mm;
+  width: 80%;
+  border-style:dotted;
+}
+
+button{
+  box-shadow: 0 4px 8px 0 rgba(229, 130, 103, 0.758), 0 12px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: rgb(89, 255, 0);
+  margin: 15px;
+  font-size: medium;
+  border-radius: 7px;
+  border: 0px;
+  height: 34px;
+  width: 70px;
+}
+
+#storedDetails{
+  /* margin-left: 40%; */
+  /* align-items: center; */
+  justify-content: center;
+}
+#mytable{
+  border-radius: 7px;
+  text-align: center;
+  margin-left: 26%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 3%;
+  padding-right: 3%;
+  margin-right: 24%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+  </style>
+</head>
+<body>
+  <div class="formclass">
+  <form id="myForm">
+    <h1>Register Form</h1>
+    <div class="input-container">
+      <input type="text" id="name" class="inputF" placeholder="Enter your name" required>
+      <span class="popup" id="popupName">This field is required</span>
+    </div>
+    <div class="input-container">
+      <input type="email" id="email" class="inputF" placeholder="Enter your email" required>
+      <span class="popup" id="popupEmail">Enter a valid email</span>
+    </div>
+    <div class="input-container">
+      <input type="password" id="password" class="inputF" placeholder="Enter your password" required>
+      <span class="popup" id="popupPassword">This field is required</span>
+    </div>
+    <div class="input-container">
+      <input type="date" id="dob" class="inputF" placeholder="Enter your date of birth" required>
+      <span class="popup" id="popupDob">Age should be 18 to 55</span>
+    </div>
+
+    <div class="input-container">
+      <input type="checkbox" name="" id="check" required>Terms & Conditions
+    </div>
+    <div class="input-container">
+      <button type="submit" id="submitBtn">Submit</button>
+    </div>
+  </form>
+</div>
+<div id="storedDetails">
+  <h2 style="margin-left:40%; margin-right: 40%; text-align: center;">Stored Details</h2>
+  <table id="mytable">
+     <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Password</th>
+      <th>Date of Birth</th>
+      <th>Accepted Term?</th>
+    </tr>
+    <tr>
+      <td>....</td>
+      <td>.....</td>
+      <td>........</td>
+      <td>..........</td>
+      <td>.............</td>
+    </tr>
+    </table>
+  </div>
+  
+  
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('myForm');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const dobInput = document.getElementById('dob');
+    const checkOut = document.getElementById('check');
+    const storedDetails = document.getElementById('storedDetails');
+
+    // Helper function to calculate age from DOB
+    const calculateAge = (dob) => {
+      const today = new Date();
+      const birthDate = new Date(dob);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
+    };
+
+    // Function to validate the form fields
+    const validateForm = () => {
+      let isValid = true;
+
+      // Validate Name
+      if (nameInput.value.trim() === '') {
+        document.getElementById('popupName').style.display = 'inline';
+        isValid = false;
+      } else {
+        document.getElementById('popupName').style.display = 'none';
+      }
+
+      // Validate Email
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(emailInput.value)) {
+        document.getElementById('popupEmail').style.display = 'inline';
+        isValid = false;
+      } else {
+        document.getElementById('popupEmail').style.display = 'none';
+      }
+
+      // Validate Password
+      if (passwordInput.value.trim() === '') {
+        document.getElementById('popupPassword').style.display = 'inline';
+        isValid = false;
+      } else {
+        document.getElementById('popupPassword').style.display = 'none';
+      }
+
+      // Validate DOB (Age between 18 and 55)
+      const age = calculateAge(dobInput.value);
+      if (isNaN(age) || age < 18 || age > 55) {
+        document.getElementById('popupDob').style.display = 'inline';
+        isValid = false;
+      } else {
+        document.getElementById('popupDob').style.display = 'none';
+      }
+      
+      return isValid;
+    };
+
+    // Function to store data in local storage
+    const storeDataInLocalStorage = () => {
+      const userDetails = {
+        name: nameInput.value,
+        email: emailInput.value,
+        password: passwordInput.value, // Note: Storing plain passwords is not secure. Consider hashing in real-world cases.
+        dob: dobInput.value,
+        check:checkOut.checked 
+      };
+      localStorage.setItem(userDetails.email, JSON.stringify(userDetails));
+    };
+
+    // Function to display stored data
+    const displayStoredData = () => {
+        ihtml=""
+        ihtml +=`<tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Date of Birth</th>
+        <th>Accepted Term?</th>
+      </tr>`
+        for (let i = 0; i < localStorage.length; i++) {
+            let storedData = JSON.parse(localStorage.getItem(localStorage.key(i)));
+            if (storedData&& localStorage.key(i)==storedData.email) {
+                ihtml +=`<tr>
+                    <td>${storedData.name}</td>
+                    <td>${storedData.email}</td>
+                    <td>${storedData.password}</td>
+                    <td>${storedData.dob}</td>
+                    <td>${storedData.check }</td>
+                </tr>`
+
+            } else {
+              ihtml += `<p>No details stored yet.</p>`;
+            }
+            document.getElementById('mytable').innerHTML = ihtml
+        }
+    };
+
+    // Initial load: Display stored data
+    displayStoredData();
+
+    // Event listener for form submission
+    form.addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent form from submitting
+
+      if (validateForm()) {
+        storeDataInLocalStorage();
+        displayStoredData();
+      } else {
+        alert('Please correct the errors before submitting.');
+      }
+    });
+  });
+</script>
+</html>
