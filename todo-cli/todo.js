@@ -62,6 +62,7 @@ const todoList = () => {
         const element = list[i];
         string = string+ `${element.completed?'[x]':'[]'} ${element.title} ${element.dueDate}\n`
       }
+      string = string+"\n"
       return string
     }
   
@@ -107,11 +108,13 @@ const todoList = () => {
   var overdues = todos.overdue()
   var formattedOverdues = todos.toDisplayableList(overdues)
   console.log(formattedOverdues)
+  // console.log("\n")
   
   console.log("Due Today")
   let itemsDueToday = todos.dueToday()
   let formattedItemsDueToday = todos.toDisplayableList(itemsDueToday)
   console.log(formattedItemsDueToday)
+  // console.log("\n")
   
   console.log("Due Later")
   let itemsDueLater = todos.dueLater()
