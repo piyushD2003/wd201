@@ -60,9 +60,9 @@ const todoList = () => {
       let string = ''
       for (let i = 0; i < list.length; i++) {
         const element = list[i];
-        string = string+ `${element.completed?'[x]':'[]'} ${element.title} ${element.dueDate}${i!==list.length-1?'\n':''}`
+        string = string+ `${element.completed?'[x]':'[ ]'} ${element.title} ${element.dueDate}${i!==list.length-1?'\n':''}`
       }
-      
+
       return string
     }
   
